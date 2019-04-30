@@ -1,7 +1,7 @@
 # ViewHelpers
 Extension functions, utility functions and delegates for Views
 
-[[![CircleCI](https://circleci.com/gh/flatcircle/ViewHelper.svg?style=svg)](https://circleci.com/gh/flatcircle/ViewHelper)
+[![CircleCI](https://circleci.com/gh/flatcircle/ViewHelper.svg?style=svg)](https://circleci.com/gh/flatcircle/ViewHelper) [ ![Download](https://api.bintray.com/packages/flatcircle/ViewHelper/viewhelper/images/download.svg) ](https://bintray.com/flatcircle/ViewHelper/viewhelper/_latestVersion)
 
 Installation
 --------
