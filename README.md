@@ -16,13 +16,13 @@ Usage
 
 | Function  | Description | Example |
 | ------------- | ------------- | ------------- |
-| .hideSoftKeyboard() | Hides the software keyboard if it is up | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34)  |
-| .showSoftKeyboard() | Opens the software keyboard if it is down | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
-| .getPxFromDp() | Calculates pixels from dp input | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
-| .getDpfromPx() | Vice versa | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
-| .showShareDialog() | Opens a generic "share with" dialogue | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
-| .showEmailDialog() | Opens a send-email intent | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
-| .showConfirmation() | Shows a generic confirmation dialog | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
+| ViewHelperUtil.hideSoftKeyboard() | Hides the software keyboard if it is up | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34)  |
+| ViewHelperUtil.showSoftKeyboard() | Opens the software keyboard if it is down | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
+| ViewHelperUtil.getPxFromDp() | Calculates pixels from dp input | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
+| ViewHelperUtil.getDpfromPx() | Vice versa | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
+| ViewHelperUtil.showShareDialog() | Opens a generic "share with" dialogue | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
+| ViewHelperUtil.showEmailDialog() | Opens a send-email intent | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
+| ViewHelperUtil.showConfirmation() | Shows a generic confirmation dialog | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
 
 
 
