@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 28
@@ -20,14 +22,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+}
 
+publish {
+    userOrg = 'flatcircle'
+    groupId = 'io.flatcircle'
+    repoName = 'ViewHelper'
+    artifactId = 'viewhelper'
+    publishVersion = '0.0.1'
+    bintrayUser = 'chesterflatcircle'
+    bintrayKey = System.getenv("BINTRAY_KEY")
+    desc = 'A list of small kotlin extension functions, utility functions and delegates for Views'
+    website = 'https://github.com/flatcircle/viewhelper'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.0.1'
+    implementation "androidx.annotation:annotation:1.0.2"
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
