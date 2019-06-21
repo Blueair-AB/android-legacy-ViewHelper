@@ -1,1 +1,1 @@
-include ':app', ':viewhelper'
+include ':app', ':viewhelper', ':viewlint'

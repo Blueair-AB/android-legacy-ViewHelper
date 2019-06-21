@@ -1,0 +1,16 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+targetCompatibility = JavaVersion.VERSION_1_7
+sourceCompatibility = JavaVersion.VERSION_1_7
+
+dependencies {
+    compileOnly "com.android.tools.lint:lint-api:26.4.1"
+    compileOnly "com.android.tools.lint:lint-checks:26.4.1"
+}
+
+jar {
+    manifest {
+        attributes('Lint-Registry-v2': 'io.flatcircle.viewlint.ViewHelperIssuesRegistry')
+    }
+}

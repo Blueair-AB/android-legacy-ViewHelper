@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package io.flatcircle.viewhelper
 
 import android.view.View
@@ -12,6 +14,7 @@ fun View.hide() {
 }
 
 fun View.show(shouldShow: Boolean = true) {
+
     this.visibility = if (shouldShow) {
         View.VISIBLE
     } else {
