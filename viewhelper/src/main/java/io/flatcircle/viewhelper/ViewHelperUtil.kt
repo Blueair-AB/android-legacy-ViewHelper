@@ -53,20 +53,20 @@ object ViewHelperUtil {
         return Math.round(px / (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
     }
 
-    /**
-     * Gets the width of a given view, in pixels
-     */
-    fun getWidth(view: View): Int {
-        val metrics = view.resources.displayMetrics
-        return metrics.widthPixels
+    fun getScreenWidth(view: View): Int {
+        return getScreenWidth(view.resources)
     }
 
-    /**
-     * Gets the height of  given view, in pixels
-     */
-    fun getHeight(view: View): Int {
-        val metrics = view.resources.displayMetrics
-        return metrics.heightPixels
+    fun getScreenWidth(resources: Resources): Int {
+        return resources.displayMetrics.widthPixels
+    }
+
+    fun getScreenHeight(view: View): Int {
+        return getScreenHeight(view.resources)
+    }
+
+    fun getScreenHeight(resources: Resources): Int {
+        return resources.displayMetrics.heightPixels
     }
 
     /**
