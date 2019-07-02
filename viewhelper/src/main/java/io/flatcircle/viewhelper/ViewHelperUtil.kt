@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
  * Created by jacquessmuts on 2019-03-26
  * Convenience Utils for View Classes
  */
+@Suppress("unused")
 object ViewHelperUtil {
 
     fun hideSoftKeyboard(view: View?) {
@@ -52,12 +53,27 @@ object ViewHelperUtil {
         return Math.round(px / (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT))
     }
 
+    fun getScreenWidth(view: View): Int {
+        return getScreenWidth(view.resources)
+    }
+
+    fun getScreenWidth(resources: Resources): Int {
+        return resources.displayMetrics.widthPixels
+    }
+
+    fun getScreenHeight(view: View): Int {
+        return getScreenHeight(view.resources)
+    }
+
+    fun getScreenHeight(resources: Resources): Int {
+        return resources.displayMetrics.heightPixels
+    }
+
     /**
      * Recursively finds all children of a given viewgroup and add them as shared elements
      * to fragmentTransaction, if the children have transitionNames.
      * This function can take a full millisecond, so be careful with complex views with many children
      */
-
     @androidx.annotation.RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun recursivelyAddSharedTransitionsForFragment(parent: ViewGroup, fragmentTransaction: FragmentTransaction) {
         for (i in 0 until parent.childCount) {
