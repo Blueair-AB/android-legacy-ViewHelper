@@ -9,6 +9,17 @@ import android.view.View
  * Extension classes for Views
  */
 
+fun setNameSir() {
+//    val context = Context()
+//    val textView = TextView(context)
+//    textView.setText(R.string.app_name)
+
+}
+
+class MaInActivity {
+
+}
+
 fun View.hide() {
     this.show(false)
 }

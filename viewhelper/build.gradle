@@ -35,6 +35,13 @@ publish {
     website = 'https://github.com/flatcircle/viewhelper'
 }
 
+tasks.whenTaskAdded { task ->
+    if (task.name == 'compileDebugSources' || task.name == 'compileReleaseSources') {
+        task.dependsOn lint
+        task.mustRunAfter lint
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -42,6 +49,7 @@ dependencies {
     implementation "androidx.annotation:annotation:1.0.2"
 
     lintPublish project(':viewlint')
+    lintChecks project(':viewlint')
 
     testImplementation 'junit:junit:4.12'
 }

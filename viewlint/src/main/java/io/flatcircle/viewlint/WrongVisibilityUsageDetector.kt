@@ -1,5 +1,7 @@
 package io.flatcircle.viewlint
 
+import com.android.tools.lint.client.api.UElementHandler
+import com.android.tools.lint.detector.api.Category
 import com.android.tools.lint.detector.api.Category.Companion.CORRECTNESS
 import com.android.tools.lint.detector.api.Detector
 import com.android.tools.lint.detector.api.Implementation
@@ -13,7 +15,10 @@ import com.intellij.psi.JavaElementVisitor
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiMethodCallExpression
 import io.flatcircle.viewlint.WrongVisibilityUsageDetector.Companion.ISSUE_GONE
+import io.flatcircle.viewlint.WrongVisibilityUsageDetector.Companion.ISSUE_NAMING_PATTERN
+import io.flatcircle.viewlint.WrongVisibilityUsageDetector.Companion.ISSUE_TEST
 import org.jetbrains.kotlin.asJava.namedUnwrappedElement
+import org.jetbrains.uast.UClass
 import org.w3c.dom.Attr
 import java.util.Arrays
 import java.util.EnumSet
@@ -33,17 +38,92 @@ class WrongVisibilityUsageDetector {
                 +" visibility modifiers should use view.hide() or view.show(false)",
             CORRECTNESS,
             5,
+            Severity.ERROR,
+            Implementation(GonePatternDetector::class.java, Scope.JAVA_FILE_SCOPE)
+        )
+
+        val ISSUE_TEST = Issue.create("setTextBad",
+            "blaaaa",
+            "jajajjajajajajjajajajajaj",
+            Category.MESSAGES,
+            5,
+            Severity.ERROR,
+            Implementation(TestDetector::class.java, Scope.JAVA_FILE_SCOPE)
+        )
+
+        val ISSUE_NAMING_PATTERN = Issue.create("NamingPattern",
+            "Names should be well named.",
+            "Some long description about this issue",
+            CORRECTNESS,
+            5,
             Severity.WARNING,
-            Implementation(GonePatternDetector::class.java,
+            Implementation(NamingPatternDetector::class.java,
                 EnumSet.of(Scope.JAVA_FILE, Scope.TEST_SOURCES))
         )
 
-        fun getIssues(): Array<Issue> {
-            return arrayOf(
-                ISSUE_GONE
+        fun getIssues(): List<Issue> {
+            return listOf(
+                ISSUE_GONE, ISSUE_TEST, ISSUE_NAMING_PATTERN
             )
         }
     }
+}
+
+class NamingPatternDetector : Detector(), Detector.UastScanner {
+    override fun getApplicableUastTypes() = listOf(UClass::class.java)
+    override fun createUastHandler(context: JavaContext) =
+        NamingPatternHandler(context)
+
+    class NamingPatternHandler(private val context: JavaContext) :
+        UElementHandler() {
+        override fun visitClass(node: UClass) {
+            if (node.name?.isDefinedCamelCase() == false) {
+                context.report(ISSUE_NAMING_PATTERN, node,
+                    context.getNameLocation(node),
+                    "Not named in defined camel case.")
+            }
+        }
+    }
+}
+
+private fun String.isDefinedCamelCase(): Boolean {
+    val charArray = toCharArray()
+    return charArray
+        .mapIndexed { index, current ->
+            current to charArray.getOrNull(index + 1)
+        }
+        .none {
+            it.first.isUpperCase() && it.second?.isUpperCase() ?: false
+        }
+}
+
+class TestDetector : Detector(), Detector.UastScanner {
+
+    override fun getApplicableMethodNames(): List<String>? {
+        return Arrays.asList("setNameSir")
+    }
+
+    override fun visitMethod(
+        context: JavaContext,
+        visitor: JavaElementVisitor?,
+        call: PsiMethodCallExpression,
+        method: PsiMethod
+    ) {
+        val methodName = method.name
+        val evaluator = context.evaluator
+
+//        if (evaluator.isMemberInClass(method, "android.widget.TextView")) {
+            val fix = quickFixIssueGone(call)
+            context.report(ISSUE_TEST,
+                call,
+                context.getLocation(call),
+                "Using 'Visibility' instead of 'show/hide'",
+                fix
+            )
+            return
+//        }
+    }
+
 }
 
 class GonePatternDetector : Detector(), Detector.UastScanner {
