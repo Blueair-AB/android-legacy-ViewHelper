@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.FragmentTransaction
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Resources
@@ -67,6 +68,95 @@ object ViewHelperUtil {
 
     fun getScreenHeight(resources: Resources): Int {
         return resources.displayMetrics.heightPixels
+    }
+
+
+    /**
+     * check if device is a low density phone
+     */
+    fun isLowDensityCheck(view: View): Boolean {
+        val metrics = view.resources.displayMetrics
+        val activity = getActivityFromView(view)
+
+        return if (activity != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            activity.windowManager.defaultDisplay.getRealMetrics(metrics)
+            metrics.densityDpi <= DisplayMetrics.DENSITY_280
+        } else {
+            false
+        }
+    }
+
+    /**
+     * check if device is a xx high density phone
+     */
+    fun isHighDensityCheck(view: View): Boolean {
+        val metrics = view.resources.displayMetrics
+        val activity = getActivityFromView(view)
+
+        return if (activity != null) {
+            activity.windowManager.defaultDisplay.getRealMetrics(metrics)
+            metrics.densityDpi > DisplayMetrics.DENSITY_MEDIUM && metrics.densityDpi <= DisplayMetrics.DENSITY_HIGH
+        } else {
+            false
+        }
+    }
+
+    /**
+     * check if device is a xx high density phone
+     */
+    fun isXHighDensityCheck(view: View): Boolean {
+        val metrics = view.resources.displayMetrics
+        val activity = getActivityFromView(view)
+
+        return if (activity != null) {
+            activity.windowManager.defaultDisplay.getRealMetrics(metrics)
+            metrics.densityDpi > DisplayMetrics.DENSITY_HIGH && metrics.densityDpi <= DisplayMetrics.DENSITY_XHIGH
+        } else {
+            false
+        }
+    }
+
+    /**
+     * check if device is a xx high density phone
+     */
+    fun isXXHighDensityCheck(view: View): Boolean {
+        val metrics = view.resources.displayMetrics
+        val activity = getActivityFromView(view)
+
+        return if (activity != null) {
+            activity.windowManager.defaultDisplay.getRealMetrics(metrics)
+            metrics.densityDpi > DisplayMetrics.DENSITY_XHIGH && metrics.densityDpi <= DisplayMetrics.DENSITY_XXHIGH
+        } else {
+            false
+        }
+    }
+
+    /**
+     * check if device is a xxx high density phone
+     */
+    fun isXXXHighDensityCheck(view: View): Boolean {
+        val metrics = view.resources.displayMetrics
+        val activity = getActivityFromView(view)
+
+        return if (activity != null) {
+            activity.windowManager.defaultDisplay.getRealMetrics(metrics)
+            metrics.densityDpi > DisplayMetrics.DENSITY_XXHIGH && metrics.densityDpi <= DisplayMetrics.DENSITY_XXXHIGH
+        } else {
+            false
+        }
+    }
+
+    private fun getActivityFromView(v: View?): Activity? {
+        if (v == null) {
+            return null
+        }
+
+        val context = v.context
+        return context as? Activity ?: if (context is ContextWrapper) {
+            context.baseContext as Activity
+        } else {
+            null
+        }
     }
 
     /**
