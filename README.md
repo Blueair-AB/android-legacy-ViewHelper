@@ -23,6 +23,7 @@ Usage
 | ViewHelperUtil.showShareDialog() | Opens a generic "share with" dialogue | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
 | ViewHelperUtil.showEmailDialog() | Opens a send-email intent | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
 | ViewHelperUtil.showConfirmation() | Shows a generic confirmation dialog | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
+| Activity.screenDensity | Determines whether the phone is Low/High/XXXHigh screen density  | [Example](https://github.com/flatcircle/LiveDataHelper/blob/master/app/src/main/java/io/flatcircle/livedatahelperexample/MainActivity.kt#L34) |
 
 
 

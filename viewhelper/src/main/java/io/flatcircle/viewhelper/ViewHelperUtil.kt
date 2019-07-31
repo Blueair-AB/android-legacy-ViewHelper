@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.FragmentTransaction
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Resources
@@ -67,6 +68,48 @@ object ViewHelperUtil {
 
     fun getScreenHeight(resources: Resources): Int {
         return resources.displayMetrics.heightPixels
+    }
+
+    val View.screenDensity: ScreenDensity?
+        get() = calculateScreenDensity(this)
+
+    fun calculateScreenDensity(view: View): ScreenDensity? {
+        val activity = getActivityFromView(view)
+
+        if (activity == null)
+            return null
+
+        return calculateScreenDensity(activity)
+    }
+
+    val Activity.screenDensity: ScreenDensity
+        get() = calculateScreenDensity(this)
+
+    fun calculateScreenDensity(activity: Activity): ScreenDensity {
+
+        val metrics = activity.resources.displayMetrics
+        activity.windowManager.defaultDisplay.getRealMetrics(metrics)
+        val density = metrics.density
+        return when {
+            density <= DisplayMetrics.DENSITY_280 -> ScreenDensity.LOW
+            density <= DisplayMetrics.DENSITY_HIGH -> ScreenDensity.HIGH
+            density <= DisplayMetrics.DENSITY_XHIGH -> ScreenDensity.XHIGH
+            density <= DisplayMetrics.DENSITY_XXHIGH -> ScreenDensity.XXHIGH
+            else -> ScreenDensity.XXXHIGH
+        }
+    }
+
+    private fun getActivityFromView(v: View?): Activity? {
+        if (v == null) {
+            return null
+        }
+
+        val context = v.context
+        return context as? Activity ?: if (context is ContextWrapper) {
+            context.baseContext as Activity
+        } else {
+            null
+        }
     }
 
     /**
