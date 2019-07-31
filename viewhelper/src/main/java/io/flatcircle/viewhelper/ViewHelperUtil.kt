@@ -70,79 +70,32 @@ object ViewHelperUtil {
         return resources.displayMetrics.heightPixels
     }
 
+    val View.screenDensity: ScreenDensity?
+        get() = calculateScreenDensity(this)
 
-    /**
-     * check if device is a low density phone
-     */
-    fun isLowDensityCheck(view: View): Boolean {
-        val metrics = view.resources.displayMetrics
+    fun calculateScreenDensity(view: View): ScreenDensity? {
         val activity = getActivityFromView(view)
 
-        return if (activity != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            activity.windowManager.defaultDisplay.getRealMetrics(metrics)
-            metrics.densityDpi <= DisplayMetrics.DENSITY_280
-        } else {
-            false
-        }
+        if (activity == null)
+            return null
+
+        return calculateScreenDensity(activity)
     }
 
-    /**
-     * check if device is a xx high density phone
-     */
-    fun isHighDensityCheck(view: View): Boolean {
-        val metrics = view.resources.displayMetrics
-        val activity = getActivityFromView(view)
+    val Activity.screenDensity: ScreenDensity
+        get() = calculateScreenDensity(this)
 
-        return if (activity != null) {
-            activity.windowManager.defaultDisplay.getRealMetrics(metrics)
-            metrics.densityDpi > DisplayMetrics.DENSITY_MEDIUM && metrics.densityDpi <= DisplayMetrics.DENSITY_HIGH
-        } else {
-            false
-        }
-    }
+    fun calculateScreenDensity(activity: Activity): ScreenDensity {
 
-    /**
-     * check if device is a xx high density phone
-     */
-    fun isXHighDensityCheck(view: View): Boolean {
-        val metrics = view.resources.displayMetrics
-        val activity = getActivityFromView(view)
-
-        return if (activity != null) {
-            activity.windowManager.defaultDisplay.getRealMetrics(metrics)
-            metrics.densityDpi > DisplayMetrics.DENSITY_HIGH && metrics.densityDpi <= DisplayMetrics.DENSITY_XHIGH
-        } else {
-            false
-        }
-    }
-
-    /**
-     * check if device is a xx high density phone
-     */
-    fun isXXHighDensityCheck(view: View): Boolean {
-        val metrics = view.resources.displayMetrics
-        val activity = getActivityFromView(view)
-
-        return if (activity != null) {
-            activity.windowManager.defaultDisplay.getRealMetrics(metrics)
-            metrics.densityDpi > DisplayMetrics.DENSITY_XHIGH && metrics.densityDpi <= DisplayMetrics.DENSITY_XXHIGH
-        } else {
-            false
-        }
-    }
-
-    /**
-     * check if device is a xxx high density phone
-     */
-    fun isXXXHighDensityCheck(view: View): Boolean {
-        val metrics = view.resources.displayMetrics
-        val activity = getActivityFromView(view)
-
-        return if (activity != null) {
-            activity.windowManager.defaultDisplay.getRealMetrics(metrics)
-            metrics.densityDpi > DisplayMetrics.DENSITY_XXHIGH && metrics.densityDpi <= DisplayMetrics.DENSITY_XXXHIGH
-        } else {
-            false
+        val metrics = activity.resources.displayMetrics
+        activity.windowManager.defaultDisplay.getRealMetrics(metrics)
+        val density = metrics.density
+        return when {
+            density <= DisplayMetrics.DENSITY_280 -> ScreenDensity.LOW
+            density <= DisplayMetrics.DENSITY_HIGH -> ScreenDensity.HIGH
+            density <= DisplayMetrics.DENSITY_XHIGH -> ScreenDensity.XHIGH
+            density <= DisplayMetrics.DENSITY_XXHIGH -> ScreenDensity.XXHIGH
+            else -> ScreenDensity.XXXHIGH
         }
     }
 
